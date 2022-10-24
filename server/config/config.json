@@ -1,15 +1,15 @@
 {
   "development": {
-    "username": "root",
+    "username": "whoyaho",
     "password": "whoyaho1!",
-    "database": "whoyaho",
+    "database": "malang",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
+    "username": "whoyaho",
     "password": "whoyaho1!",
-    "database": "whoyahoProd",
+    "database": "malang",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
