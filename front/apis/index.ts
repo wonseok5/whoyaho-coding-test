@@ -1,0 +1,78 @@
+import axios, { AxiosRequestConfig } from "axios";
+import { API_URL } from "../constants";
+
+type BaseConfig = Partial<AxiosRequestConfig>;
+
+interface APIOption<K = {}> {
+  endPoint: string;
+  config?: BaseConfig;
+  params?: any;
+  body?: K;
+  returnRaw?: boolean;
+}
+
+enum APIMethod {
+  GET = "get",
+  POST = "post",
+  PUT = "put",
+  DELETE = "delete",
+  PATCH = "patch",
+}
+
+export abstract class BaseAPI {
+  abstract URL: string;
+
+  private getURL(endPoint: string) {
+    return API_URL + this.URL + endPoint;
+  }
+
+  private async getConfigs(config?: BaseConfig) {
+    //   const uidToken = await AsyncStorage.getItem("uidToken");
+    //   const BASE_CONFIG: BaseConfig = {
+    //     headers: { Authorization: `Bearer ${uidToken}` },
+    //   };
+    const BASE_CONFIG = {};
+    return { ...BASE_CONFIG, ...config };
+  }
+
+  private async methodFactory<T, K = {}>(
+    method: APIMethod,
+    option: APIOption<K>
+  ): Promise<T> {
+    const { endPoint, config, body, params } = option;
+    const URL = this.getURL(endPoint);
+    const CONFIG = await this.getConfigs({ ...config, params });
+    const needBodyMethod =
+      method === APIMethod.POST ||
+      method === APIMethod.PUT ||
+      method === APIMethod.PATCH;
+
+    try {
+      const { data } = needBodyMethod
+        ? await axios[method]<T>(URL, body, CONFIG)
+        : await axios[method]<T>(URL, CONFIG);
+      return data;
+    } catch (error) {
+      throw new Error(`API Error: ${(error as any).message}`);
+    }
+  }
+
+  protected async get<T>(option: APIOption) {
+    return this.methodFactory<T>(APIMethod.GET, option);
+  }
+
+  protected async post<T, K = {}>(option: APIOption<K>) {
+    return this.methodFactory<T, K>(APIMethod.POST, option);
+  }
+
+  protected async put<T, K = {}>(option: APIOption<K>) {
+    return this.methodFactory<T, K>(APIMethod.PUT, option);
+  }
+
+  protected async patch<T, K = {}>(option: APIOption<K>) {
+    return this.methodFactory<T, K>(APIMethod.PATCH, option);
+  }
+  protected async delete<T, K = {}>(option: APIOption<K>) {
+    return this.methodFactory<T, K>(APIMethod.DELETE, option);
+  }
+}
