@@ -1,14 +1,21 @@
+const logger = require("morgan");
+const cors = require("cors");
 const express = require("express");
+const indexRouter = require("./router/index");
+const usersRouter = require("./router/users");
+const cookieParser = require("cookie-parser");
+const { whiteList } = require("./constants");
 
 const app = express();
 
+app.use(cors({ origin: whiteList, credentials: true }));
+app.use(logger("dev"));
 app.use(express.json());
+app.use(cookieParser("whoyaho1!"));
 
-app.get("/hello", (req, res) => {
-  console.log(req.url);
-  return res.json({ message: "hello world" });
-});
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 
-app.listen(3000, () => {
+app.listen(8081, () => {
   console.log("listening...");
 });

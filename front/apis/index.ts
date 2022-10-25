@@ -19,6 +19,12 @@ enum APIMethod {
   PATCH = "patch",
 }
 
+type APIResponse<T> =
+  | T & {
+      statusCode: number;
+      statusMsg: string;
+    };
+
 export abstract class BaseAPI {
   abstract URL: string;
 
@@ -27,18 +33,14 @@ export abstract class BaseAPI {
   }
 
   private async getConfigs(config?: BaseConfig) {
-    //   const uidToken = await AsyncStorage.getItem("uidToken");
-    //   const BASE_CONFIG: BaseConfig = {
-    //     headers: { Authorization: `Bearer ${uidToken}` },
-    //   };
-    const BASE_CONFIG = {};
+    const BASE_CONFIG: BaseConfig = { withCredentials: true };
     return { ...BASE_CONFIG, ...config };
   }
 
   private async methodFactory<T, K = {}>(
     method: APIMethod,
     option: APIOption<K>
-  ): Promise<T> {
+  ): Promise<APIResponse<T>> {
     const { endPoint, config, body, params } = option;
     const URL = this.getURL(endPoint);
     const CONFIG = await this.getConfigs({ ...config, params });
@@ -49,8 +51,8 @@ export abstract class BaseAPI {
 
     try {
       const { data } = needBodyMethod
-        ? await axios[method]<T>(URL, body, CONFIG)
-        : await axios[method]<T>(URL, CONFIG);
+        ? await axios[method]<APIResponse<T>>(URL, body, CONFIG)
+        : await axios[method]<APIResponse<T>>(URL, CONFIG);
       return data;
     } catch (error) {
       throw new Error(`API Error: ${(error as any).message}`);
