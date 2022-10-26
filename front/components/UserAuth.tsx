@@ -50,6 +50,10 @@ const UserAuth: FC<Props> = ({ isLogin }) => {
           setCheckedPassword("");
           return;
         }
+        if (!password || !username) {
+          alert("정보를 입력해주세요");
+          return;
+        }
         try {
           await signup({ username, password });
           router.push("/");

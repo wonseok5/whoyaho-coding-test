@@ -3,12 +3,16 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require("../middlewares");
-const { User } = db;
+const { User, UserProfile } = db;
 const router = express.Router();
 
 // callback hell resolve
 router.get("/", verifyToken, async (req, res) => {
-  const targetUser = await User.findOne({ where: { id: req.user.id } });
+  const targetUser = await User.findOne({
+    where: { id: req.user.id },
+    include: { model: UserProfile },
+  });
+  console.log(JSON.stringify(targetUser));
   if (!targetUser) {
     return res
       .status(404)
@@ -91,6 +95,13 @@ router.post("/logout", verifyToken, async (req, res) => {
     statusCode: 201,
     statusMessage: "success in logout",
   });
+});
+
+router.post("/email", verifyToken, async (req, res) => {
+  await User.update({ email: req.body.email }, { where: { id: req.user.id } });
+  return res
+    .status(201)
+    .json({ statusCode: 201, statusMessage: "success in update email" });
 });
 
 module.exports = router;

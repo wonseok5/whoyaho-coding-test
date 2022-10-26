@@ -25,6 +25,11 @@ type LoginResponse = {
 type GetUserResponse = {
   user: User;
 };
+
+type SaveEmailBodyDTO = {
+  email: string;
+};
+
 export class UsersApiHandler extends BaseAPI {
   URL = "/users";
 
@@ -45,6 +50,10 @@ export class UsersApiHandler extends BaseAPI {
 
   logout() {
     return this.post<{}, {}>({ endPoint: "/logout" });
+  }
+
+  saveEmail(body: SaveEmailBodyDTO) {
+    return this.post<{}, SaveEmailBodyDTO>({ endPoint: "/email", body });
   }
 }
 

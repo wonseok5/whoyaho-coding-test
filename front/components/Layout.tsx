@@ -23,9 +23,13 @@ const TitleArea = styled.div`
 `;
 const HomeTitle = styled.a`
   font-weight: bold;
+  cursor: pointer;
 `;
 
-const BodyArea = styled.div``;
+const BodyArea = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Layout: FC<Props> = ({ children }) => {
   return (
