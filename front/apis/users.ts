@@ -1,9 +1,16 @@
 import { BaseAPI } from ".";
 
+export type UserProfile = {
+  nickname: string;
+  intro: string;
+  profileImage: string;
+  UserId: number;
+};
 export type User = {
   id: number;
   username: string;
   email: string | null;
+  UserProfile: UserProfile | null;
 };
 type SignupBodyDTO = {
   username: string;
@@ -30,6 +37,10 @@ type SaveEmailBodyDTO = {
   email: string;
 };
 
+type SaveUserProfileResponse = {
+  userProfile: UserProfile;
+};
+
 export class UsersApiHandler extends BaseAPI {
   URL = "/users";
 
@@ -54,6 +65,13 @@ export class UsersApiHandler extends BaseAPI {
 
   saveEmail(body: SaveEmailBodyDTO) {
     return this.post<{}, SaveEmailBodyDTO>({ endPoint: "/email", body });
+  }
+
+  saveUserProfile(body: UserProfile) {
+    return this.post<SaveUserProfileResponse, UserProfile>({
+      endPoint: "/userProfile",
+      body,
+    });
   }
 }
 

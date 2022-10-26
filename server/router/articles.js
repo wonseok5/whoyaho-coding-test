@@ -1,7 +1,7 @@
 const express = require("express");
 const { verifyToken } = require("../middlewares");
 const { Op } = require("sequelize");
-const { Article } = require("../models");
+const { Article, Category } = require("../models");
 const router = express.Router();
 
 router.post("/", verifyToken, async (req, res) => {
@@ -21,10 +21,11 @@ router.get("/articles", verifyToken, async (req, res) => {
   const limit = Number(req.query.limit);
   const articles = await Article.findAll({
     where: { id: { [lastArticleId === 0 ? Op.gt : Op.lt]: lastArticleId } },
+    include: { model: Category },
     order: [["id", "DESC"]],
     limit,
   });
-  console.log(limit, lastArticleId, "!!!");
+  console.log(articles.map((a) => a.dataValues));
   return res.status(200).json({
     statusCode: 200,
     statusMessage: "success in getting articles",

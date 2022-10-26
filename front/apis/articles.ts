@@ -10,6 +10,13 @@ export type GetArticlesQueryDto = {
   lastId: number;
 };
 
+export type Category = {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Article = {
   id: number;
   title: string;
@@ -17,6 +24,7 @@ export type Article = {
   UserId: number;
   createdAt: string;
   updatedAt: string;
+  Category: Category;
 };
 export type GetArticlesResponse = {
   articles: Article[];

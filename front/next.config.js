@@ -5,6 +5,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ["cdn.simpledimpleworld.com"],
+  },
 };
 
 module.exports = nextConfig;

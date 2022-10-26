@@ -14,6 +14,7 @@ export type UserContextType = {
   signup: (signupInfo: { username: string; password: string }) => Promise<void>;
   login: (loginInfo: { username: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
+  getUser: () => Promise<void>;
 };
 
 const defaultUserContext: UserContextType = {
@@ -21,10 +22,12 @@ const defaultUserContext: UserContextType = {
     id: 0,
     username: "",
     email: "",
+    UserProfile: null,
   },
   signup: async (signupInfo) => {},
   login: async (loginInfo) => {},
   logout: async () => {},
+  getUser: async () => {},
 };
 
 const UserContext = createContext<UserContextType>(defaultUserContext);
@@ -82,7 +85,7 @@ export const UserContextProvider: FC<UserContextProps> = ({ children }) => {
     })();
   }, [getUser]);
   return (
-    <UserContext.Provider value={{ user, signup, login, logout }}>
+    <UserContext.Provider value={{ user, signup, login, logout, getUser }}>
       {children}
     </UserContext.Provider>
   );

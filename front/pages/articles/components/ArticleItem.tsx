@@ -9,7 +9,17 @@ const Container = styled.div`
   margin-right: 1rem;
   padding: 0.5rem;
   border-radius: 1rem;
-  & div {
+  box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > div:nth-child(2) {
+      background-color: ${({ theme }) => theme.colors.black};
+      color: ${({ theme }) => theme.colors.white};
+      padding: 1rem;
+      border-radius: 999px;
+    }
   }
   & h4 {
     margin: 0.5rem;
@@ -27,7 +37,10 @@ type Props = {
 const ArticleItem: FC<Props> = ({ article }) => {
   return (
     <Container>
-      <div>({article.id})</div>
+      <div>
+        <div>(id: {article.id})</div>
+        {article.Category.name && <div>{article.Category.name}</div>}
+      </div>
       <h4>{article.title}</h4>
       <p>{article.content}</p>
     </Container>

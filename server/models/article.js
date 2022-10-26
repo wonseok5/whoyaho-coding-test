@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.User, { foreignKey: "UserId" });
+      this.belongsTo(models.Category, { foreignKey: "CategoryId" });
     }
   }
   Article.init(
@@ -21,10 +22,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         references: { model: "Users", id: "id" },
       },
+      CategoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: { model: "Categories", id: "id" },
+      },
     },
     {
       sequelize,
       modelName: "Article",
+      tableName: "Articles",
       charset: "utf-8",
       collate: "utf8_general_ci",
     }

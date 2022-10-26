@@ -8,12 +8,15 @@ import React, {
 import { User, UsersApi } from "../apis/users";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext";
+import UserProfile from "./UserProfile";
 const Container = styled.div`
   border: 1px solid black;
   border-radius: 1rem;
   padding: 1rem;
   & h3 {
     margin: 0;
+  }
+  & > div {
   }
   & > div div {
     padding: 0.2rem;
@@ -60,6 +63,7 @@ const UserInfo: FC<Props> = ({ user }) => {
     <Container>
       <h3>내 정보</h3>
       <div>
+        <UserProfile />
         <div>id : {user.id}</div>
         <div>username : {user.username}</div>
         {!emailEditMode ? (

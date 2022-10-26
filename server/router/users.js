@@ -12,12 +12,12 @@ router.get("/", verifyToken, async (req, res) => {
     where: { id: req.user.id },
     include: { model: UserProfile },
   });
-  console.log(JSON.stringify(targetUser));
   if (!targetUser) {
     return res
       .status(404)
       .json({ statusCode: 404, statusMessage: "user not found" });
   }
+  console.log(targetUser.dataValues);
   return res.status(200).json({
     user: targetUser,
     statusCode: 200,
@@ -102,6 +102,19 @@ router.post("/email", verifyToken, async (req, res) => {
   return res
     .status(201)
     .json({ statusCode: 201, statusMessage: "success in update email" });
+});
+
+router.post("/userProfile", verifyToken, async (req, res) => {
+  const body = req.body;
+  const savedUser = UserProfile.create({
+    UserId: req.user.id,
+    profileImage: body.profileImage,
+  });
+  return res.status(201).json({
+    user: savedUser,
+    statusCode: 201,
+    statusMessage: "success in save user profile",
+  });
 });
 
 module.exports = router;
