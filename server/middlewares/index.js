@@ -3,19 +3,13 @@ const jwt = require("jsonwebtoken");
 exports.verifyToken = (req, res, next) => {
   try {
     const accessToken = req.cookies["access-token"];
-    console.log(accessToken);
     if (!accessToken) {
       return res
         .status(403)
         .json({ statusCode: 403, statusMessage: "no access token" });
     }
-    try {
-      req.user = jwt.verify(accessToken, "whoyaho1!");
-      console.log(req.user);
-      return next();
-    } catch (error) {
-      next(error);
-    }
+    req.user = jwt.verify(accessToken, "whoyaho1!");
+    return next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
       return res
