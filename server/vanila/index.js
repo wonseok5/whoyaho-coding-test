@@ -10,32 +10,32 @@ const fidgets = [
     description: "크리스마스에 태어난 귀여운 눈토끼",
   },
   {
-    id: 2,
+    id: 3,
     name: "샤베토",
     description: "크리스마스에 태어난 귀여운 눈토끼",
   },
   {
-    id: 3,
-    name: "지켜줄개",
-    description: "든든한 댕댕이",
-  },
-  {
-    id: 3,
-    name: "지켜줄개",
-    description: "든든한 댕댕이",
-  },
-  {
-    id: 3,
-    name: "지켜줄개",
-    description: "든든한 댕댕이",
-  },
-  {
     id: 4,
+    name: "지켜줄개",
+    description: "든든한 댕댕이",
+  },
+  {
+    id: 5,
+    name: "지켜줄개",
+    description: "든든한 댕댕이",
+  },
+  {
+    id: 6,
+    name: "지켜줄개",
+    description: "든든한 댕댕이",
+  },
+  {
+    id: 7,
     name: "잘될고양",
     description: "괜찮아 잘 될고양!",
   },
   {
-    id: 4,
+    id: 8,
     name: "잘될고양",
     description: "괜찮아 잘 될고양!",
   },
