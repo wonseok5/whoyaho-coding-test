@@ -42,7 +42,7 @@ const fidgets = [
 ];
 
 // 문제 1
-// id가 3인 fidget을 찾는 findFidgetById 함수를 작성해주세요
+// id 로 fidget을 찾는 findFidgetById 함수를 작성해주세요
 function findFidgetById() {
   // 여기에 코딩 해주세요
 }
